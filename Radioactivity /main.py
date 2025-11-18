@@ -6,7 +6,7 @@ def random_array(N):
     for i in range(N):
         f[i]=rn.random()
     return f       
-def monte_carlo(N0,D0,p,tmax):
+def monte_carlo(N0,D0,l,tmax):
     N1=N0
     D1=D0
     f=[]
@@ -14,6 +14,7 @@ def monte_carlo(N0,D0,p,tmax):
     t=0
     t1=[]
     dt=0.5
+    p=1-exp(-l*dt)
     while N1>0 and t<tmax:
         M=random_array(N1)
         f.append(N1)
