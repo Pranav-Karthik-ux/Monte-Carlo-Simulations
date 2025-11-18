@@ -1,0 +1,82 @@
+\documentclass[12pt]{article}
+
+% -------------------------------------------------
+% PACKAGES
+% -------------------------------------------------
+\usepackage{amsmath, amssymb}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{mathtools}
+
+\geometry{a4paper, margin=1in}
+
+\title{Monte Carlo Simulation of Radioactivity }
+\author{}
+\date{}
+\begin{document}
+
+\maketitle
+
+\section{Theory of the Monte Carlo Decay Simulation}
+
+In this simulation we model the radioactive decay of an ensemble of $N$ unstable
+particles (or nucleons). Radioactive decay is inherently a stochastic process:
+each particle has a fixed probability per unit time of decaying, but the exact
+moment of decay for each individual particle cannot be predicted. Instead, the
+decay follows a probabilistic law.
+
+\subsection{Decay Probability}
+
+For a small time interval $\Delta t$, the probability that a given particle
+decays is taken to be a constant value $p$. This corresponds to the discretized
+form of an exponential decay law. In the continuous case, the number of
+particles $N(t)$ remaining at time $t$ is
+\[
+N(t) = N_0 e^{-\lambda t},
+\]
+where $\lambda$ is the decay constant. In the discrete Monte Carlo model, we
+approximate the relation between $p$ and $\lambda$ by
+\[
+p \approx 1 - e^{-\lambda \Delta t}.
+\]
+
+\subsection{Monte Carlo Procedure}
+
+At every time step:
+\begin{enumerate}
+    \item A set of $N(t)$ random numbers, uniformly distributed in $[0,1]$, is
+    generated. Each random number corresponds to one particle.
+    \item For each particle, if the random number $r_i$ satisfies
+    \[
+    r_i \le p,
+    \]
+    then that particle is considered to have decayed during the interval
+    $\Delta t$.
+    \item The number of undecayed particles $N$ and the number of decayed
+    particles $D$ are updated accordingly.
+\end{enumerate}
+
+\subsection{Time Evolution}
+
+The process continues while $N(t)>0$ and $t<t_{\max}$. At each step, the
+population is updated according to
+\[
+N(t+\Delta t) = N(t) - \Delta N, \qquad
+D(t+\Delta t) = D(t) + \Delta N,
+\]
+where $\Delta N$ is the number of particles that decayed during the time step.
+
+This algorithm produces a stochastic realization of the decay curve. For large
+numbers of particles and small $\Delta t$, the averaged results approach the
+analytical exponential decay law.
+
+\subsection{Interpretation}
+
+Because each decay event is determined by random sampling, individual runs of
+the simulation will fluctuate around the ideal exponential decay curve. The
+Monte Carlo method therefore provides an intuitive and computationally simple
+way to visualize and study the probabilistic nature of radioactive decay.
+\end{document}
